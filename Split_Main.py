@@ -117,8 +117,8 @@ print("Peaks 2: ", peaks_w)
 
 dir_out = filedialog.askdirectory(initialdir=curr,title='Open directory for saving img')
 name, ext = os.path.splitext(filename)
-for j in range(0, len(peaks_w-2)):
-    for i in range(0, len(peaks_h-2)):
+for j in range(0, len(peaks_h)-1):
+    for i in range(0, len(peaks_w)-1):
         box = (peaks_w[i], peaks_h[j], peaks_w[i+1], peaks_h[j+1])
         out = os.path.join(dir_out, f'{name}_{i}_{j}{ext}')
         image_for_cutting.crop(box).save(out)
