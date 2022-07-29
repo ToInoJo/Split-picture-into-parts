@@ -105,8 +105,7 @@ br1_smooth = scipy.signal.savgol_filter(br1_raw, 60, 1, deriv=0, delta=1.0, axis
 peaks_h,dump1 = scipy.signal.find_peaks(br_smooth, height=None, threshold=None, distance=100, prominence=None, width=None, wlen=None, rel_height=0.5, plateau_size=None)
 peaks_w,dump2 = scipy.signal.find_peaks(br1_smooth, height=None, threshold=None, distance=100, prominence=None, width=None, wlen=None, rel_height=0.5, plateau_size=None)
 
-print("Peaks 1: ", peaks_h)
-print("Peaks 2: ", peaks_w)
+
 
 peaks_h = np.insert(peaks_h, 0, 0, axis=0)
 peaks_h = np.insert(peaks_h, len(peaks_h), w, axis=0)
@@ -116,9 +115,10 @@ print("Peaks 1: ", peaks_h)
 print("Peaks 2: ", peaks_w)
 
 dir_out = filedialog.askdirectory(initialdir=curr,title='Open directory for saving img')
+ogdir, filename = os.path.split(filename)
 name, ext = os.path.splitext(filename)
-for j in range(0, len(peaks_w-2)):
-    for i in range(0, len(peaks_h-2)):
+for j in range(0, len(peaks_h)-1):
+    for i in range(0, len(peaks_w)-1):
         box = (peaks_w[i], peaks_h[j], peaks_w[i+1], peaks_h[j+1])
         out = os.path.join(dir_out, f'{name}_{i}_{j}{ext}')
         image_for_cutting.crop(box).save(out)
